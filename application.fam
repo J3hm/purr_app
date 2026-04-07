@@ -9,5 +9,5 @@ App(
     fap_icon="purr_icon.png",
     fap_description="A soothing continuous purr machine for sensory comfort.",
     fap_author="J3hm",
-    fap_weburl="https://github.com/J3hm/purr_app", # Optionnel
+    fap_weburl="https://github.com/J3hm/purr_app",
 )
