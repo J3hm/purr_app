@@ -1,7 +1,7 @@
 /* 
- * F0 Purring cat -
- * Version: 1.6.5
- * Author: J3hm (Jehm Pom)
+ * F0 Purring cat - Clean Indent Edition
+ * Version: 1.6.7
+ * Author: J3hm
  */
 
 #include <furi.h>
@@ -54,7 +54,7 @@ static void cat_meow_safe() {
     }
 }
 
-// --- DESSIN DE PATTE DE CHAT ---
+// --- DESSIN ---
 
 static void draw_cat_paw(Canvas* canvas, int x, int y, bool open) {
     canvas_draw_disc(canvas, x + 15, y + 20, 10);
@@ -76,34 +76,54 @@ static void draw_callback(Canvas* canvas, void* context) {
     if(furi_mutex_acquire(app_data->mutex, 20) != FuriStatusOk) return;
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
+
+    // Titre d'état en haut
     canvas_set_font(canvas, FontPrimary);
     const char* status = (app_data->state == StateOff) ? "Zzz..." : 
                          (app_data->state == StateTrill) ? "Meow! <3" : "Purring...";
     canvas_draw_str_aligned(canvas, 64, 8, AlignCenter, AlignCenter, status);
-    draw_cat_paw(canvas, 48, 18, (app_data->state == StateOff) ? false : app_data->is_expiring);
+
+    // Dessin de la patte (centrée au milieu)
+    draw_cat_paw(canvas, 48, 16, (app_data->state == StateOff) ? false : app_data->is_expiring);
     
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 32, "PWR");
-    canvas_draw_frame(canvas, 12, 22, 6, 22);
-    
+
+    // --- BARRE PWR (Gauche) + Label Vertical ---
+    canvas_draw_str(canvas, 4, 21, "P");
+    canvas_draw_str(canvas, 3, 30, "W");
+    canvas_draw_str(canvas, 4, 39, "R");
+    canvas_draw_frame(canvas, 12, 20, 6, 22);
     int p_bar = ((app_data->power - MIN_PWR) * 20) / (MAX_PWR - MIN_PWR);
-    if(p_bar < 0) p_bar = 0; 
-    if(p_bar > 20) p_bar = 20;
-    canvas_draw_box(canvas, 13, 43 - p_bar, 4, p_bar);
-    
-    canvas_draw_str(canvas, 95, 32, "RYTM");
-    canvas_draw_frame(canvas, 110, 22, 6, 22);
-    int r_bar = ((MAX_RYTM_MS - app_data->speed_ms) * 20) / (MAX_RYTM_MS - MIN_RYTM_MS);
-    if(r_bar < 0) r_bar = 0; 
-    if(r_bar > 20) r_bar = 20;
-    canvas_draw_box(canvas, 111, 43 - r_bar, 4, r_bar);
-    
-    if(app_data->state == StateOff) {
-        canvas_draw_str_aligned(canvas, 64, 45, AlignCenter, AlignCenter, "By J3hm (Jehm Pom)");
-        canvas_draw_str_aligned(canvas, 64, 58, AlignCenter, AlignCenter, "Press OK to Start");
-    } else {
-        canvas_draw_str_aligned(canvas, 64, 58, AlignCenter, AlignCenter, "OK: Meow | Hold OK: Stop");
+    if(p_bar < 0) {
+        p_bar = 0;
     }
+    if(p_bar > 20) {
+        p_bar = 20;
+    }
+    canvas_draw_box(canvas, 13, 41 - p_bar, 4, p_bar);
+
+    // --- BARRE RYTM (Droite) + Label Vertical ---
+    canvas_draw_str(canvas, 120, 18, "R");
+    canvas_draw_str(canvas, 120, 27, "Y");
+    canvas_draw_str(canvas, 120, 36, "T");
+    canvas_draw_str(canvas, 119, 45, "M");
+    canvas_draw_frame(canvas, 110, 20, 6, 22);
+    int r_bar = ((MAX_RYTM_MS - app_data->speed_ms) * 20) / (MAX_RYTM_MS - MIN_RYTM_MS);
+    if(r_bar < 0) {
+        r_bar = 0;
+    }
+    if(r_bar > 20) {
+        r_bar = 20;
+    }
+    canvas_draw_box(canvas, 111, 41 - r_bar, 4, r_bar);
+
+    // --- PIED DE PAGE ---
+    if(app_data->state == StateOff) {
+        canvas_draw_str_aligned(canvas, 64, 60, AlignCenter, AlignBottom, "By J3hm - Press OK to Start");
+    } else {
+        canvas_draw_str_aligned(canvas, 64, 60, AlignCenter, AlignBottom, "OK: Meow | Hold OK: Stop");
+    }
+
     furi_mutex_release(app_data->mutex);
 }
 
