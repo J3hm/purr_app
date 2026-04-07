@@ -1,5 +1,5 @@
 /* 
- * F0 Purring cat - Clean Indent Edition
+ * F0 Purring cat -
  * Version: 1.6.5
  * Author: J3hm (Jehm Pom)
  */
@@ -54,7 +54,7 @@ static void cat_meow_safe() {
     }
 }
 
-// --- DESSIN ---
+// --- DESSIN DE PATTE DE CHAT ---
 
 static void draw_cat_paw(Canvas* canvas, int x, int y, bool open) {
     canvas_draw_disc(canvas, x + 15, y + 20, 10);
