@@ -1,5 +1,5 @@
 /* 
- * F0 Purring cat - Clean Indent Edition
+ * F0 Purring cat
  * Version: 1.6.7
  * Author: J3hm
  */
