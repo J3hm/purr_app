@@ -5,7 +5,7 @@ App(
     entry_point="purr_app_main",
     stack_size=2 * 1024,
     fap_category="Tools",
-    fap_version="1.6.5",
+    fap_version="1.6.7",
     fap_icon="purr_icon.png",
     fap_description="A soothing continuous purr machine for sensory comfort.",
     fap_author="J3hm",
